@@ -12,8 +12,8 @@ class BaseModel:
         """Initializes the class with this attributes"""
 
         self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.created_at = datetime.now().isoformat()
+        self.updated_at = datetime.now().isoformat()
 
     def __str__(self):
         """Returns the string representation of instances"""
@@ -29,8 +29,8 @@ class BaseModel:
         """Returns a dict. containing keys/values of __dict__ wrt instance"""
 
         dicts = self.__dict__
-        dicts["created_at"] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
-        dicts["updated_at"] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        # dicts["created_at"] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f"
+        # dicts["updated_at"] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f"
         dicts["__class__"] = self.__class__.__name__
 
         return dicts
