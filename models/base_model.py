@@ -8,12 +8,20 @@ from datetime import datetime
 class BaseModel:
     """This is the parent class for all other classes in this project"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializes the class with this attributes"""
 
+        time_4mat = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
+
+        if kwargs:
+            for key in kwargs:
+                if key != "__class__":
+                    if key == "created_at" or key == "updated_at":
+                        kwargs[key] = datetime.strptime(kwargs[key], time_4mat)
+                    self.__dict__[key] = kwargs[key]
 
     def __str__(self):
         """Returns the string representation of instances"""
