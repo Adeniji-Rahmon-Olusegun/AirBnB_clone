@@ -2,6 +2,7 @@
 """Module contains base model for this AirBnB clone project"""
 
 from uuid import uuid4
+from models import storage
 from datetime import datetime
 
 
@@ -23,6 +24,8 @@ class BaseModel:
                         kwargs[key] = datetime.strptime(kwargs[key], time_4mat)
                     self.__dict__[key] = kwargs[key]
 
+        storage.new(self)
+
     def __str__(self):
         """Returns the string representation of instances"""
 
@@ -32,13 +35,16 @@ class BaseModel:
         """Updates the updated_at with the current datetime"""
 
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """Returns a dict. containing keys/values of __dict__ wrt instance"""
 
-        dicts = self.__dict__
-        dicts["created_at"] = self.created_at.isoformat()
-        dicts["updated_at"] = self.updated_at.isoformat()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        dicts = self.__dict__.copy()
+        for key, value in dicts.items():
+            if isinstance(value, datetime):
+                dicts[key] = value.strftime(time_format)
         dicts["__class__"] = self.__class__.__name__
 
         return dicts
