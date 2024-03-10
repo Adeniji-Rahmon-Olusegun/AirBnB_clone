@@ -23,7 +23,7 @@ class BaseModel:
     def save(self):
         """Updates the updated_at with the current datetime"""
 
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.now().isoformat()
 
     def to_dict(self):
         """Returns a dict. containing keys/values of __dict__ wrt instance"""
