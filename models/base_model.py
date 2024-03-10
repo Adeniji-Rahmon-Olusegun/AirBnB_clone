@@ -29,8 +29,8 @@ class BaseModel:
         """Returns a dict. containing keys/values of __dict__ wrt instance"""
 
         dicts = self.__dict__
-        dicts["created_at"] = self.created_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
-        dicts["updated_at"] = self.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%f")
+        dicts["created_at"] = self.created_at.isoformat()
+        dicts["updated_at"] = self.updated_at.isoformat()
         dicts["__class__"] = self.__class__.__name__
 
         return dicts
