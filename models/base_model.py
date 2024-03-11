@@ -13,17 +13,17 @@ class BaseModel:
         """Initializes the class with this attributes"""
 
         time_4mat = "%Y-%m-%dT%H:%M:%S.%f"
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
 
         if kwargs:
-            for key in kwargs:
+            for key, value in kwargs.items():
                 if key != "__class__":
                     if key in ["created_at", "updated_at"]:
-                        self.__dict__[key] = datetime.strptime(kwargs[key], time_4mat)
-                    else:
-                        setattr(self, key, kwargs[key])
+                        value = datetime.strptime(value, time_4mat)
+                setattr(self, key, value)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
         storage.new(self)
 
