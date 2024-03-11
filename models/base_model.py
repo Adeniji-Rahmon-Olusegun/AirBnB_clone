@@ -1,8 +1,7 @@
 #!/usr/bin/pytho
 """Module contains base model for this AirBnB clone project"""
-
 import uuid
-#from models import storage
+# from models import storage
 from datetime import datetime
 
 
