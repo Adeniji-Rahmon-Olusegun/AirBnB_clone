@@ -17,11 +17,12 @@ class BaseModelTest(unittest.TestCase):
         m_model = BaseModel()
 
         last_update = m_model.updated_at
-        curr_update = m_model.save()
+        m_model.save()
+        curr_update = m_model.updated_at
 
         self.assertNotEqual(last_update, curr_update)
+        self.assertIsInstance(curr_update, datetime)
         self.assertIsInstance(last_update, datetime)
-        # self.assertIsInstance(m_model.save(), datetime)
 
     def test_to_dict(self):
         m_model = BaseModel()
