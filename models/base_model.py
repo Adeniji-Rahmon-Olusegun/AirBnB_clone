@@ -23,7 +23,7 @@ class BaseModel:
                     if key in ["created_at", "updated_at"]:
                         self.__dict__[key] = datetime.strptime(kwargs[key], time_4mat)
                     else:
-                        setattr(key, kwargs[key])
+                        setattr(self, key, kwargs[key])
 
         storage.new(self)
 
