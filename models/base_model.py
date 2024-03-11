@@ -1,4 +1,4 @@
-#!/usr/bin/pytho
+#!/usr/bin/python3
 """Module contains base model for this AirBnB clone project"""
 import uuid
 # from models import storage
