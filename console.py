@@ -91,10 +91,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             
-            inst_list = [
-                str(inst) for inst in storage.all().values()
-                if not class_ or isinstance(inst, eval(class_))
-            ]
+        inst_list = [
+            str(inst) for inst in storage.all().values()
+            if not class_ or isinstance(inst, eval(class_))
+        ]
         print(inst_list)
 
     def do_update(self, line):

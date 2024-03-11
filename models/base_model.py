@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """Module contains base model for this AirBnB clone project"""
 
-from uuid
-from models import storage
+import uuid
+#from models import storage
 from datetime import datetime
 
 
