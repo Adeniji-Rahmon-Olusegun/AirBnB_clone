@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/pytho
 """Module contains base model for this AirBnB clone project"""
 
 import uuid
@@ -13,8 +13,8 @@ class BaseModel:
         """Initializes the class with this attributes"""
 
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = self.created_at
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
 
     def __str__(self):
         """Returns the string representation of the instances"""
@@ -26,7 +26,7 @@ class BaseModel:
         with the current datetime
         """
 
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.today()
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of
