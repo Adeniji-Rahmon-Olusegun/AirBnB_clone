@@ -26,7 +26,7 @@ class BaseModel:
         with the current datetime
         """
 
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.now().isoformat()
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of
