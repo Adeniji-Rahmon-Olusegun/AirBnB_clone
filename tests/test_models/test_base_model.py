@@ -2,6 +2,7 @@
 """Module contains tests for BaseModel"""
 
 import unittest
+from datetime import datetime
 from models.base_model import BaseModel
 
 class BaseModelTest(unittest.TestCase):
@@ -19,6 +20,8 @@ class BaseModelTest(unittest.TestCase):
         curr_update = m_model.save()
 
         self.assertNotEqual(last_update, curr_update)
+        self.assertIsInstance(last_update, datetime)
+        # self.assertIsInstance(m_model.save(), datetime)
 
     def test_to_dict(self):
         m_model = BaseModel()
