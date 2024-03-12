@@ -20,14 +20,12 @@ class HBNBCommand(cmd.Cmd):
         
         if not line:
             print("** class name missing **")
-            return
-        
-        if line[0] not in self.acceptable_classes:
+        elif line[0] not in self.acceptable_classes:
             print("** class doesn't exist **")
-
-        instance = BaseModel()
-        instance.save()
-        print(instance.id)
+        else:
+            instance = BaseModel()
+            instance.save()
+            print(instance.id)
 
     def do_show(self, line):
         """Prints string repr of instance based on class name & id"""
@@ -35,21 +33,16 @@ class HBNBCommand(cmd.Cmd):
 
         if not line:
             print("** class name missing **")
-            return
-
-        if line[0] not in self.acceptable_classes:
+        elif line[0] not in self.acceptable_classes:
             print("** class doesn't exist **")
-            return
-        
-        if len(line) < 2:
+        elif len(line) < 2:
             print("** instance id missing **")
-            return
-
-        try:
-            inst = storage.all()[f"{line[0]}.{line[1]}"]
-            print(inst)
-        except KeyError:
-            print("** no instance found **")
+        else:
+            try:
+                inst = storage.all()[f"{line[0]}.{line[1]}"]
+                print(inst)
+            except KeyError:
+                print("** no instance found **")
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id"""
@@ -57,22 +50,17 @@ class HBNBCommand(cmd.Cmd):
 
         if not line:
             print("** class name missing **")
-            return
-
-        if line[0] not in self.acceptable_classes:
+        elif line[0] not in self.acceptable_classes:
             print("** class doesn't exist **")
-            return
-
-        if len(line) < 2:
+        elif len(line) < 2:
             print("** instance id missing **")
-            return
-
-        try:
-            key = f"{line[0]}.{line[1]}"
-            del storage.all()[key]
-            storage.save()
-        except KeyError:
-            print("** no instance found **")
+        else:
+            try:
+                key = f"{line[0]}.{line[1]}"
+                del storage.all()[key]
+                storage.save()
+            except KeyError:
+                print("** no instance found **")
 
     def do_all(self, line):
         """
@@ -104,36 +92,31 @@ class HBNBCommand(cmd.Cmd):
 
         if not line:
             print("** class name missing **")
-            return
-
-        if line[0] not in self.acceptable_classes:
+        elif line[0] not in self.acceptable_classes:
             print("** class doesn't exist **")
-            return
-
-        if len(line) < 2:
+        elif len(line) < 2:
             print("** instance id missing **")
-            return
-
-        objs = storage.all()
-        key = f"{line[0]}.{line[1]}"
-
-        if key not in objs:
-            print("** no instance found **")
-        elif len(line) < 3:
-            print("** attribute name missing **")
-        elif len(line) < 4:
-            print("** value missing **")
         else:
-            obj = objs[key]
+            objs = storage.all()
+            key = f"{line[0]}.{line[1]}"
 
-            try:
-                line[3] = eval(line[3])
-            except Exception:
-                pass
+            if key not in objs:
+                print("** no instance found **")
+            elif len(line) < 3:
+                print("** attribute name missing **")
+            elif len(line) < 4:
+                print("** value missing **")
+            else:
+                obj = objs[key]
 
-            setattr(obj, line[2], line[3])
-            
-            obj.save()
+                try:
+                    line[3] = eval(line[3])
+                except Exception:
+                    pass
+                
+                setattr(obj, line[2], line[3])
+
+                obj.save()
 
     def emptyline(self):
         """Emptyline shouldn't execute anything"""
