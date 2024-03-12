@@ -11,6 +11,7 @@ class HBNBCommand(cmd.Cmd):
     """This class is the CLI for testing and others"""
 
     prompt = "(hbnb) "
+    acceptable_classes = ["BaseModel"]
 
     def do_create(self, line):
         """Creates new instance of BaseModel, saves and prints id"""
@@ -37,19 +38,17 @@ class HBNBCommand(cmd.Cmd):
         if not line:
             print("** class name missing **")
             return
+
+        if line[0] not in self.acceptable_classes:
+            print("** class doesn't exist **")
+            return
         
         if len(line) < 2:
             print("** instance id missing **")
             return
 
-        class_, inst_id = line[0], line[1]
-        
-        if class_ not in globals():
-            print("** class doesn't exist **")
-            return
-
         try:
-            inst = storage.all()[f"{class_}.{inst_id}"]
+            inst = storage.all()[f"{class_}.{line[1]}"]
             print(inst)
         except KeyError:
             print("** no instance found **")
@@ -62,17 +61,16 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if len(line) < 2:
-            print("** instance id missing **")
-            return
-        class_, inst_id = line[0], line[1]
-
-        if class_ not in globals():
+        if line[0] not in self.acceptable_classes:
             print("** class doesn't exist **")
             return
 
+        if len(line) < 2:
+            print("** instance id missing **")
+            return
+
         try:
-            inst = storage.all()[f"{class_}.{inst_id}"]
+            inst = storage.all()[f"{class_}.{line[1]}"]
             del inst
         except KeyError:
             print("** no instance found **")
@@ -84,18 +82,18 @@ class HBNBCommand(cmd.Cmd):
         """
 
         line = shlex.split(line)
+        
+        objs = storage.all()
 
-        if line:
-            class_ = line[0]
-            if class_ not in globals():
-                print("** class doesn't exist **")
-                return
-            
-        inst_list = [
-            str(inst) for inst in storage.all().values()
-            if not class_ or isinstance(inst, eval(class_))
-        ]
-        print(inst_list)
+        if not line:
+            for value in objs.values():
+                print(str(value))
+        elif line[0] not in self. acceptable_classes:
+            print("** class doesn't exist **")
+        else:
+            for key, value in objs.items():
+                if key.split('.')[0] == line[0]:
+                    print(str(value))
 
     def do_update(self, line):
         """ Updates an instance based on the class name and id
@@ -109,14 +107,34 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if line:
-            if class_ not in globals():
-                print("** class doesn't exist **")
-                return
+        if class_ not in self.acceptable_classes:
+            print("** class doesn't exist **")
+            return
 
         if len(line) < 2:
             print("** instance id missing **")
+            return
+
+        objs = storage.all()
+        key = f"{line[0]}.{line[1]}"
+
+        if key not in objs:
+            print("** no instance found **")
+        elif len(line) < 3:
+            print("** attribute name missing **")
+        elif len(line) < 4:
+            print("** value missing **")
+        else:
+            obj = objs[key]
+
+            try:
+                line[3] = eval(line[3])
+            except Exception:
+                pass
+
+            setattr(obj, line[2], line[3])
             
+            obj.save()
 
     def emptyline(self):
         """Emptyline shouldn't execute anything"""

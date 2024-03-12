@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Module contains base model for this AirBnB clone project"""
 import uuid
-# from models import storage
+from models import storage
 from datetime import datetime
 
 
@@ -22,6 +22,7 @@ class BaseModel:
                     if key == "created_at" or key == "updated_at":
                         value = datetime.strptime(value, time_format)
                 self.__dict__[key] = value
+        storage.new(self)
 
 
     def __str__(self):
@@ -37,6 +38,7 @@ class BaseModel:
         """
 
         self.updated_at = datetime.utcnow()
+        storage.save()
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of
