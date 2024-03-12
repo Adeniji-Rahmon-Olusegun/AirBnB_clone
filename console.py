@@ -11,7 +11,7 @@ class HBNBCommand(cmd.Cmd):
     """This class is the CLI for testing and others"""
 
     prompt = "(hbnb) "
-    acceptable_classes = ["BaseModel"]
+    acceptable_classes = {"BaseModel"}
 
     def do_create(self, line):
         """Creates new instance of BaseModel, saves and prints id"""
