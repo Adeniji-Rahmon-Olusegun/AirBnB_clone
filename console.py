@@ -48,12 +48,12 @@ class HBNBCommand(cmd.Cmd):
             return
 
         try:
-            inst = storage.all()[f"{class_}.{line[1]}"]
+            inst = storage.all()[f"{line[0]}.{line[1]}"]
             print(inst)
         except KeyError:
             print("** no instance found **")
 
-    def destroy(self, line):
+    def do_destroy(self, line):
         """Deletes an instance based on the class name and id"""
         line = shlex.split(line)
 
@@ -70,8 +70,9 @@ class HBNBCommand(cmd.Cmd):
             return
 
         try:
-            inst = storage.all()[f"{class_}.{line[1]}"]
-            del inst
+            key = f"{line[0]}.{line[1]}"
+            del storage.all()[key]
+            storage.save()
         except KeyError:
             print("** no instance found **")
 
@@ -107,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if class_ not in self.acceptable_classes:
+        if line[0] not in self.acceptable_classes:
             print("** class doesn't exist **")
             return
 
