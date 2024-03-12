@@ -23,8 +23,8 @@ class HBNBCommand(cmd.Cmd):
         elif line[0] not in self.acceptable_classes:
             print("** class doesn't exist **")
         else:
-            instance = eval(line[0])()
-            instance.save()
+            instance = eval(f"(line[0])()")
+            storage.save()
             print(instance.id)
 
     def do_show(self, line):
