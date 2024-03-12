@@ -22,14 +22,12 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         
-        class_ = line[0]
-
-        try:
-            instance = eval(class_)()
-            instance.save()
-            print(instance.id)
-        except NameError:
+        if line[0] not in self.acceptable_classes:
             print("** class doesn't exist **")
+
+        instance = BaseModel()
+        instance.save()
+        print(instance.id)
 
     def do_show(self, line):
         """Prints string repr of instance based on class name & id"""
