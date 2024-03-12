@@ -36,6 +36,7 @@ class FileStorage:
         """ deserializes the JSON file to __objects if file exist"""
 
         from models.base_model import BaseModel
+        from models.user import User
 
         if os.path.exists(self.__file_path):
             with open(self.__file_path, "r") as file_obj:

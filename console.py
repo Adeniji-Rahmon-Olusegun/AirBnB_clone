@@ -5,13 +5,13 @@ import cmd
 import shlex
 from models import storage
 from models.base_model import BaseModel
-
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """This class is the CLI for testing and others"""
 
     prompt = "(hbnb) "
-    acceptable_classes = {"BaseModel"}
+    acceptable_classes = {"BaseModel", "User"}
 
     def do_create(self, line):
         """Creates new instance of BaseModel, saves and prints id"""
@@ -23,7 +23,7 @@ class HBNBCommand(cmd.Cmd):
         elif line[0] not in self.acceptable_classes:
             print("** class doesn't exist **")
         else:
-            instance = BaseModel()
+            instance = eval(line[0])()
             instance.save()
             print(instance.id)
 
